@@ -40,14 +40,13 @@ else
 	skynet.start(function()
 		local id = socket.listen("0.0.0.0", 8001)
 		print("Listen socket :", "0.0.0.0", 8001)
-
-		socket.start(id , function(id, addr)
-			print("connect from " .. addr .. " " .. id)
+		--socket.start(id , function(id, addr)
+			--print("connect from " .. addr .. " " .. id)
 			-- you have choices :
 			-- 1. skynet.newservice("testsocket", "agent", id)
 			-- 2. skynet.fork(echo, id)
 			-- 3. accept(id)
-			accept(id)
+			--accept(id)
 		end)
 	end)
 end
