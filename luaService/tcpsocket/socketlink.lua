@@ -2,6 +2,7 @@ local skynet = require "skynet"
 local socket = require "skynet.socket"
 
 local mode , id = ...
+LinkList = {}
 
 local function echo(id)
 	socket.start(id)
@@ -43,6 +44,10 @@ else
 			-- 1. skynet.newservice("testsocket", "agent", id)
 			-- 2. skynet.fork(echo, id)
 			-- 3. accept(id)
+			LinkList[id]=addr
+			for k, v in pairs(LinkList) do  
+    		print(k, v)  
+			end 
 			accept(id)
 		end)
 	end)
