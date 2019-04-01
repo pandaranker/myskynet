@@ -92,5 +92,15 @@ scene_enter 7 {
 
 heartbeat 8 {}
 
+say 9 {
+  request {
+   name 0 : string
+   msg 1 : string
+  }
+  response {
+    name 0 : string
+    msg 1 : string
+  }
+}
 
 ]]

@@ -1,18 +1,113 @@
 local skynet = require "skynet"
 local socket = require "skynet.socket"
 
+local proto = require "xjproto"
+local sproto = require "sproto"
+
 local mode , id = ...
 LinkList = {}
 
+
+local host
+local last = ""
+
+local REQUEST = {}
+
+function REQUEST:say()
+    print("say", self.name, self.msg)
+	return {name = "cxl", msg = "hello"}		
+end
+
+function REQUEST:handshake()
+    print("handshake")
+end
+
+function REQUEST:quit()
+    print("quit")	
+end
+
+local function request(name, args, response)
+    local f = assert(REQUEST[name])
+    local r = f(args)
+    if response and r then
+        -- 生成回应包(response是一个用于生成回应包的函数。)
+        -- 处理session对应问题
+        return response(r)
+    end
+end
+
+local function unpack_package(text)
+	local size = #text
+	if size < 2 then
+		return nil, text
+	end
+	local s = text:byte(1) * 256 + text:byte(2)
+	if size < s+2 then
+		return nil, text
+	end
+
+	return text:sub(3,2+s), text:sub(3+s)
+end
+
+local function recv_package(last, fd)
+	local result
+	result, last = unpack_package(last)
+	if result then
+		return result, last
+	end
+	local r = socket.read(fd)
+	if r then
+		return nil, last .. r
+	else
+		return nil, nil
+	end
+end
+
+local function send_package(id, pack)
+	local package = string.pack(">s2", pack)
+	socket.write(id, package) 
+end
+
 local function echo(id)
 	socket.start(id)
+    last = ""
+
+    host = sproto.new(proto.c2s):host "package"
+    host2 = sproto.new(proto.s2c):host "package"
+    -- request = host:attach(sproto.new(proto.c2s))
 	print("readline")
-  print(id)
+    print(id)
+
 	while true do
-		local str = socket.read(id)
+		local str
+        str, last = recv_package(last, id)
 		if str then
-			socket.write(id, str)
-		else
+			local type,str2,str3,str4 = host:dispatch(str)
+
+			if type=="REQUEST" then
+				local ok, result  = pcall(request, str2,str3,str4)
+
+				if ok then
+					if result then
+						send_package(id,result)
+					end
+				else
+					skynet.error(result)
+				end
+			end
+
+			if str2 == "quit" then
+				print("quit!")
+				socket.close(id)
+				return
+			end
+
+			if type=="RESPONSE" then
+				-- 暂时不处理客户端的回应
+				print("client response")
+			end         
+		elseif not last then
+			print("disconnected!")
 			socket.close(id)
 			return
 		end
