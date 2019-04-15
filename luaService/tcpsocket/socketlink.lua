@@ -15,7 +15,7 @@ local REQUEST = {}
 
 function REQUEST:say()
     print("say", self.name, self.msg)
-	return {name = "cxl", msg = "hello"}		
+	return {name = "cxk", msg = "hello"}		
 end
 
 function REQUEST:handshake()
@@ -109,6 +109,7 @@ local function echo(id)
 		elseif not last then
 			print("disconnected!")
 			socket.close(id)
+            LinkList.remove(LinkList[id])
 			return
 		end
 	end
