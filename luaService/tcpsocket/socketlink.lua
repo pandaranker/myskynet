@@ -4,27 +4,14 @@ local socket = require "skynet.socket"
 local proto = require "xjproto"
 local sproto = require "sproto"
 
+require "requestFromClient"
+
 local mode , id = ...
 LinkList = {}
 
 
 local host
 local last = ""
-
-local REQUEST = {}
-
-function REQUEST:say()
-    print("say", self.name, self.msg)
-	return {name = "cxk", msg = "hello"}		
-end
-
-function REQUEST:handshake()
-    print("handshake")
-end
-
-function REQUEST:quit()
-    print("quit")	
-end
 
 local function request(name, args, response)
     local f = assert(REQUEST[name])

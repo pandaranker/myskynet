@@ -104,10 +104,6 @@ say 9 {
 }
 
 handshake 10 {
-<<<<<<< HEAD
   
-=======
-
->>>>>>> branch 'master' of git@github.com:pandaranker/myskynet.git
 }
 ]]
