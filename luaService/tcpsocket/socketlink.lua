@@ -15,6 +15,13 @@ function command.del(id)
     LinkList[id]=nil
 end
 
+function send_request(name, args) 
+	session = session + 1
+	local str = requestSender(name, args, session)
+	send_package(fd, str)
+	print("Request:", session)
+end
+
 function command.gb(movement)
     send_request("player_movement",{id = movement.id,hor= movement.hor,ver = movement.ver})
 end
@@ -34,13 +41,6 @@ local function request(name, args, response)
 end
 
 local session = 0
-
-local function send_request(name, args) 
-	session = session + 1
-	local str = requestSender(name, args, session)
-	send_package(fd, str)
-	print("Request:", session)
-end
 
 local function unpack_package(text)
 	local size = #text
