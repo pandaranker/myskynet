@@ -112,7 +112,7 @@ end
 
 if mode == "agent" then
 	id = tonumber(id)
-
+    skynet.register('.sonsocket')
     skynet.dispatch("lua", function(session, address, cmd, ...)
         local f = command[cmd]
         if f then
@@ -131,7 +131,7 @@ else
 	local function accept(id)
 		socket.start(id)
 		socket.write(id, "Hello Skynet\n")
-		skynet.newservice("sonsocket", "agent", id)
+		skynet.newservice(SERVICE_NAME, "agent", id)
 		socket.abandon(id)
 	end
     

@@ -29,7 +29,7 @@ end
 
 function REQUEST:player_movement()
     print(self.hor)
-    skynet.send('sonsocket',"lua","gb",self.id)
+    skynet.send('.sonsocket',"lua","gb",self.id)
 end
 
 return REQUEST
