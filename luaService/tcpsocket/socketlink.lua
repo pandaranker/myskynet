@@ -113,6 +113,14 @@ end
 if mode == "agent" then
 	id = tonumber(id)
 
+    skynet.dispatch("lua", function(session, address, cmd, ...)
+        local f = command[cmd]
+        if f then
+            f(...)
+        else
+            error(string.format("Unknown command %s", tostring(cmd)))
+        end
+    end)
 	skynet.start(function()
 		skynet.fork(function()
 			echo(id)
@@ -123,7 +131,7 @@ else
 	local function accept(id)
 		socket.start(id)
 		socket.write(id, "Hello Skynet\n")
-		skynet.newservice(SERVICE_NAME, "agent", id)
+		skynet.newservice("sonsocket", "agent", id)
 		socket.abandon(id)
 	end
     
