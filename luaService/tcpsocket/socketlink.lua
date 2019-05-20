@@ -31,7 +31,7 @@ end
 local host
 local last = ""
 
-local function request(name, args, response)
+ function request(name, args, response)
     local f = assert(REQUEST[name])
     local r = f(args)
     if response and r then
@@ -42,7 +42,7 @@ local function request(name, args, response)
 
 end
 
-local function unpack_package(text)
+function unpack_package(text)
 	local size = #text
 	if size < 2 then
 		return nil, text
@@ -55,7 +55,7 @@ local function unpack_package(text)
 	return text:sub(3,2+s), text:sub(3+s)
 end
 
-local function recv_package(last, fd)
+ function recv_package(last, fd)
 	local result
 	result, last = unpack_package(last)
 	if result then
@@ -69,7 +69,7 @@ local function recv_package(last, fd)
 	end
 end
 
-local function send_package(id, pack)
+function send_package(id, pack)
 	local package = string.pack(">s2", pack)
 	socket.write(id, package) 
 end
