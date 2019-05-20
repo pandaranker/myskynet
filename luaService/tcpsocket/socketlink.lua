@@ -8,6 +8,8 @@ local REQUEST = require "requestFromClient"
 require  "skynet.manager"
 local mode , id = ...
 
+local session = 0
+
 LinkList = {}
 local command = {name = 'ListDel'}
 
@@ -39,8 +41,6 @@ local function request(name, args, response)
     end
 
 end
-
-local session = 0
 
 local function unpack_package(text)
 	local size = #text
