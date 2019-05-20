@@ -25,7 +25,8 @@ function send_request(name, args)
 end
 
 function command.gb(movement)
-    send_request("player_movement",{id = movement.id,hor= movement.hor,ver = movement.ver})
+    print(movement.id,movement.hor,movement.ver)
+    --send_request("player_movement",{id = movement.id,hor= movement.hor,ver = movement.ver})
 end
 
 local host
