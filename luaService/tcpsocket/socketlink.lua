@@ -20,13 +20,14 @@ end
 function send_request(name, args) 
 	session = session + 1
 	local str = requestSender(name, args, session)
-	send_package(fd, str)
+	send_package(id, str)
 	print("Request:", session)
 end
 
 function command.gb(movement)
-    print(movement.id,movement.hor,movement.ver)
-    --send_request("player_movement",{id = movement.id,hor= movement.hor,ver = movement.ver})
+    --print(movement.id,movement.hor,movement.ver)
+    --socket.write(122)
+    send_request("player_movement",{id = movement.id,hor= movement.hor,ver = movement.ver})
 end
 
 local host
