@@ -106,4 +106,51 @@ say 9 {
 handshake 10 {
   
 }
+
+.Position{
+  id 0 : integer
+  x  1 : integer
+  y  2 : integer  
+}
+
+.RoleState{
+  state 0 : integer
+  facex 1 : integer
+  facey 2 : integer
+}
+
+player_position 11 {
+  request {
+    frame 0 : integer
+    pos   1 : Position
+    state 2 : RoleState
+  }
+  response {
+    otherPos 0 : *Position
+    otherState 1 : *RoleState
+  }
+}
+
+player_join 12 {
+	request {
+		id 0 : integer
+	}
+	response {
+		
+	}
+}
+
+monster_position 13 {
+  request {
+    frame 0 : integer
+    pos   1 : Position
+    type  2 : integer
+  }
+  response {
+    otherPos 0 : *Position
+  }
+}
+
+
+
 ]]

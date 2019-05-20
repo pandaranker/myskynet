@@ -1,5 +1,5 @@
 local skynet = require "skynet"
-
+require "skynet.manager"
 local max_client = 64
 
 skynet.start(function()
@@ -15,5 +15,7 @@ skynet.start(function()
 		nodelay = true,
 	})
 	skynet.error("Watchdog listen on", 8888)
+	local socketlink = skynet.newservice("socketlink")
+	skynet.name('.socketmanager',socketlink)
 	skynet.exit()
 end)

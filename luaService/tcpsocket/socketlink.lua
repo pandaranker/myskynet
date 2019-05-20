@@ -4,11 +4,16 @@ local socket = require "skynet.socket"
 local proto = require "xjproto"
 local sproto = require "sproto"
 
-require "requestFromClient"
+local REQUEST = require "requestFromClient"
 
 local mode , id = ...
-LinkList = {}
 
+LinkList = {}
+local command = {name = 'ListDel'}
+
+function command.del(id)
+    LinkList[id]=nil
+end
 
 local host
 local last = ""
@@ -21,6 +26,7 @@ local function request(name, args, response)
         -- 处理session对应问题
         return response(r)
     end
+
 end
 
 local function unpack_package(text)
@@ -60,8 +66,8 @@ local function echo(id)
     last = ""
 
     host = sproto.new(proto.c2s):host "package"
-    host2 = sproto.new(proto.s2c):host "package"
-    -- request = host:attach(sproto.new(proto.c2s))
+    --host2 = sproto.new(proto.s2c):host "package"
+    requestSender = host:attach(sproto.new(proto.c2s))
 	print("readline")
     print(id)
 
@@ -70,10 +76,8 @@ local function echo(id)
         str, last = recv_package(last, id)
 		if str then
 			local type,str2,str3,str4 = host:dispatch(str)
-
 			if type=="REQUEST" then
-				local ok, result  = pcall(request, str2,str3,str4)
-
+				local ok, result  = pcall(request,str2,str3,str4)
 				if ok then
 					if result then
 						send_package(id,result)
@@ -83,7 +87,7 @@ local function echo(id)
 				end
 			end
 
-			if str2 == "quit" then
+			if str2 == "handshake" then
 				print("quit!")
 				socket.close(id)
 				return
@@ -96,7 +100,7 @@ local function echo(id)
 		elseif not last then
 			print("disconnected!")
 			socket.close(id)
-            LinkList.remove(LinkList[id])
+            skynet.send('.socketmanager',"lua","del",id)
 			return
 		end
 	end
@@ -118,7 +122,7 @@ else
 		skynet.newservice(SERVICE_NAME, "agent", id)
 		socket.abandon(id)
 	end
-
+    
 	skynet.start(function()
 		local id = socket.listen("0.0.0.0", 8001)
 		print("Listen socket :", "0.0.0.0", 8001)
@@ -133,5 +137,14 @@ else
 			end 
 			accept(id)
 		end)
+        skynet.dispatch("lua", function(session, address, cmd, ...)
+            local f = command[cmd]
+            if f then
+                f(...)
+            else
+                error(string.format("Unknown command %s", tostring(cmd)))
+            end
+        end)
 	end)
+    
 end
