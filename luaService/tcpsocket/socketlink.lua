@@ -90,7 +90,7 @@ local function echo(id)
 			if str2 == "handshake" then
 				print("握手信号")
 				--socket.close(id)
-				return
+				--return
 			end
 
 			if type=="RESPONSE" then
