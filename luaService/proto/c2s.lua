@@ -134,6 +134,7 @@ player_position 11 {
 player_join 12 {
 	request {
 		id 0 : integer
+    name 1 : string
 	}
 	response {
 		
