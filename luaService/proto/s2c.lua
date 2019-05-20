@@ -42,4 +42,12 @@ scene_aoi_exit 3 {
 	}
 }
 
+player_movement 4 {
+  request {
+    id 0 : integer
+    hor 1 : string
+    ver 2 : string
+  }  
+}
+
 ]]

@@ -16,7 +16,7 @@ function command.del(id)
 end
 
 function command.gb(id)
-    print("gb",id)
+    send_request("player_movement",{id = self.id,hor= self.hor,ver=self.ver})
 end
 
 local host
@@ -31,6 +31,15 @@ local function request(name, args, response)
         return response(r)
     end
 
+end
+
+local session = 0
+
+local function send_request(name, args) 
+	session = session + 1
+	local str = requestSender(name, args, session)
+	send_package(fd, str)
+	print("Request:", session)
 end
 
 local function unpack_package(text)
@@ -71,7 +80,7 @@ local function echo(id)
 
     host = sproto.new(proto.c2s):host "package"
     --host2 = sproto.new(proto.s2c):host "package"
-    requestSender = host:attach(sproto.new(proto.c2s))
+    requestSender = host:attach(sproto.new(proto.s2c))
 	print("readline")
     print(id)
 
