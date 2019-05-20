@@ -15,6 +15,10 @@ function command.del(id)
     LinkList[id]=nil
 end
 
+function command.gb(id)
+    print("gb",id)
+end
+
 local host
 local last = ""
 
