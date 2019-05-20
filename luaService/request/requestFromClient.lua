@@ -1,4 +1,4 @@
-local skynet = require "skynet"
+--local skynet = require "skynet"
 local REQUEST = {}
 
 REQUEST.playerList={}
@@ -24,12 +24,12 @@ end
 
 function REQUEST:player_position()
     print(self.pos.id)	
-    skynet.send('.socketmanager',"lua","gb",self.id)
     REQUEST.playerPosition[self.pos.id]=self
 end
 
 function REQUEST:player_movement()
     print(self.hor)
+    skynet.send('.socketmanager',"lua","gb",self.id)
 end
 
 return REQUEST
