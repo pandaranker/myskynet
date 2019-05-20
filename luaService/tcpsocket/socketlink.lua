@@ -15,8 +15,8 @@ function command.del(id)
     LinkList[id]=nil
 end
 
-function command.gb(id)
-    send_request("player_movement",{id = self.id,hor= self.hor,ver=self.ver})
+function command.gb(movement)
+    send_request("player_movement",{id = movement.id,hor= movement.hor,ver = movement.ver})
 end
 
 local host
