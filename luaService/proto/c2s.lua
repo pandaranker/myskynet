@@ -157,7 +157,7 @@ player_movement 14 {
     id 0 : integer
     hor 1 : float
     ver 2 : float
-  }
-  
+  }  
+}
 
 ]]
