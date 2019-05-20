@@ -155,8 +155,8 @@ monster_position 13 {
 player_movement 14 {
   request {
     id 0 : integer
-    hor 1 : float
-    ver 2 : float
+    hor 1 : string
+    ver 2 : string
   }  
 }
 
