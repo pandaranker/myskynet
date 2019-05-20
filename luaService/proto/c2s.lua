@@ -152,6 +152,12 @@ monster_position 13 {
   }
 }
 
-
+player_movement 14 {
+  request {
+    id 0 : integer
+    hor 1 : float
+    ver 2 : float
+  }
+  
 
 ]]

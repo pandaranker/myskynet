@@ -26,4 +26,8 @@ function REQUEST:player_position()
     REQUEST.playerPosition[self.pos.id]=self
 end
 
+function REQUEST:player_movement()
+    print(self.hor)
+end
+
 return REQUEST
