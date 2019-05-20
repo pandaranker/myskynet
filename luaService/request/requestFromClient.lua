@@ -9,7 +9,7 @@ function REQUEST:say()
 end
 
 function REQUEST:player_join()
-    print("玩家"+self.id+"加入房间")
+    print("玩家",self.id,"加入房间")
     REQUEST.playerList[self.id]=self
 end
 
