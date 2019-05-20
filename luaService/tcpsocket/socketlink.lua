@@ -88,8 +88,8 @@ local function echo(id)
 			end
 
 			if str2 == "handshake" then
-				print("quit!")
-				socket.close(id)
+				print("握手信号")
+				--socket.close(id)
 				return
 			end
 
