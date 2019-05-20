@@ -5,7 +5,7 @@ local proto = require "xjproto"
 local sproto = require "sproto"
 
 local REQUEST = require "requestFromClient"
-
+require  "skynet.manager"
 local mode , id = ...
 
 LinkList = {}
