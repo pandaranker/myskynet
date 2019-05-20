@@ -8,6 +8,11 @@ function REQUEST:say()
 	return {name = "cxk", msg = "hello"}		
 end
 
+function REQUEST:player_join()
+    print("玩家"+self.id+"加入房间")
+    REQUEST.playerList[self.id]=self
+end
+
 function REQUEST:handshake()
     print("handshake")
 end
