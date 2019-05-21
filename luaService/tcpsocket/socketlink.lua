@@ -27,7 +27,7 @@ end
 function command.gb(movement)
     --print(movement.id,movement.hor,movement.ver)
     --socket.write(122)
-    send_request("player_movement",{id = movement.id,hor= movement.hor,ver = movement.ver})
+    send_request("player_movement",{id = movement.id+1,hor= movement.hor,ver = movement.ver})
 end
 
 local host
