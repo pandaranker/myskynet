@@ -32,4 +32,9 @@ function REQUEST:player_movement()
     skynet.send('.sonsocket',"lua","gb",self)
 end
 
+function REQUEST:player_rotation()
+    print(self.x)
+    skynet.send('.sonsocket',"lua","rt",self)
+end
+
 return REQUEST

@@ -50,4 +50,11 @@ player_movement 4 {
   }  
 }
 
+player_rotation 5 {
+  request {
+    id 0 : integer
+    x 1 : string
+    z 2 : string
+  }  
+}
 ]]
